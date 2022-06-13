@@ -20,3 +20,5 @@ C:\Users\Nikita\source\repos\C#\TestTask\TestTask\obj\Debug\net6.0-windows\ref\T
 C:\Users\Nikita\source\repos\C#\TestTask\TestTask\obj\Debug\net6.0-windows\View\MainWindow.g.cs
 C:\Users\Nikita\source\repos\C#\TestTask\TestTask\obj\Debug\net6.0-windows\View\MainWindow.baml
 C:\Users\Nikita\source\repos\C#\TestTask\TestTask\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\Nikita\source\repos\C#\TestTask\TestTask\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\Nikita\source\repos\C#\TestTask\TestTask\obj\Debug\net6.0-windows\TestTask.csproj.CopyComplete

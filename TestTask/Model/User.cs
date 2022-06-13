@@ -4,22 +4,24 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace TestTask.Model
 {
-    internal class Step : INotifyPropertyChanged
+    internal class User : INotifyPropertyChanged
     {
-        private string user;
+        private string name;
+        public List<int> steps = new List<int>();
         private int averageOfSteps;
 
-        public string User
+        public string Name
         {
-            get { return user; }
+            get { return name; }
             set
             {
-                user = value;
-                OnPropertyChanged("User");
+                name = value;
+                OnPropertyChanged("Name");
             }
         }
         public int AverageOfSteps

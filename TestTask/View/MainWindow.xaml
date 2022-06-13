@@ -6,42 +6,27 @@
         xmlns:local="clr-namespace:TestTask"
         xmlns:vm="clr-namespace:TestTask.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Steps" Height="600" Width="1000">
     <Window.DataContext>
         <vm:Main/>
     </Window.DataContext>
-    <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0.8*" />
         </Grid.ColumnDefinitions>
-
-        <ListBox Grid.Column="0" ItemsSource="{Binding Steps}"
-                 SelectedItem="{Binding SelectedUser}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock FontSize="18" Text="{Binding Path=User}" />
-                        <TextBlock Text="{Binding Path=AverageOfSteps}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <StackPanel Grid.Column="1" DataContext="{Binding SelectedUser}">
-            <TextBlock Text="Выбранный элемент"  />
-            <TextBlock Text="Модель" />
-            <TextBox Text="{Binding User, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Производитель" />
-            <TextBox Text="{Binding AverageOfSteps, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+        <ListView Name="userList" ItemsSource="{Binding User}" >
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                        <GridViewColumn Header="Average of steps" DisplayMemberBinding="{Binding Path=AverageOfSteps}"></GridViewColumn>
+                        <!--<GridViewColumn Header="Best result" DisplayMemberBinding="{Binding Path=UnitCost}"></GridViewColumn>
+                        <GridViewColumn Header="Worst re" DisplayMemberBinding="{Binding Path=UnitCost}"></GridViewColumn>-->
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
     </Grid>
 </Window>
