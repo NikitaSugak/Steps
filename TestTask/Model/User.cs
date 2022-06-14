@@ -14,6 +14,8 @@ namespace TestTask.Model
         private string name;
         public List<int> steps = new List<int>();
         private int averageOfSteps;
+        private int minSteps;
+        private int maxSteps;
 
         public string Name
         {
@@ -33,7 +35,27 @@ namespace TestTask.Model
                 OnPropertyChanged("Avg of steps");
             }
         }
-        
+
+        public int MinSteps
+        {
+            get { return minSteps; }
+            set
+            {
+                minSteps = value;
+                OnPropertyChanged("minSteps");
+            }
+        }
+
+        public int MaxSteps
+        {
+            get { return maxSteps; }
+            set
+            {
+                maxSteps = value;
+                OnPropertyChanged("maxSteps");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

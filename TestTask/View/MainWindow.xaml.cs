@@ -25,6 +25,17 @@ namespace TestTask
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+        private void userList_SelectionChanged()
+        {
+
+        }
+
+        private void userList_SelectionChanged_1(object sender)
+        {
+
         }
     }
 }

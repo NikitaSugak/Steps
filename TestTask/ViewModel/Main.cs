@@ -9,13 +9,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using TestTask.Model;
 
 namespace TestTask.ViewModel
 {
     internal class Main : INotifyPropertyChanged
     {
-        private User selectedUser;
+        private User? selectedUser;
 
         public ObservableCollection<User> User { get; set; }
         public User SelectedUser
@@ -28,32 +31,45 @@ namespace TestTask.ViewModel
             }
         }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public Main()
         {
+            this.User = new ObservableCollection<User>();
+
             getUsersName();
             getUsersSteps();
             setAverageOfSteps();
-            //addUsersToTable();
+            setMaxSteps();
+            setMinSteps();
+
+            if (SelectedUser != null)
+            {
+                DrawGraph.setGraph(User, SelectedUser);
+            }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+
+                if (SelectedUser != null)
+                {
+                    DrawGraph.setGraph(User, SelectedUser);
+                }
+            }
         }
 
         public void getUsersName()
         {
-            this.User = new ObservableCollection<User>();
-
             JArray users = JArray.Parse(File.ReadAllText("TestData/day1.json"));
 
             for (int i = 0; i < users.Count; i++)
             {
                 this.User.Add(new User { Name = (string)users[i]["User"] });
             }
-
         }
 
         public void getUsersSteps()
@@ -64,21 +80,23 @@ namespace TestTask.ViewModel
             {
                 JArray records = JArray.Parse(File.ReadAllText(path[i]));
 
-                for (int j = 0; j < records.Count; j++)
-                {
-                    for (int k = 0; k < this.User.Count; k++)
-                    {
-                        if (this.User[k].Name == (string)records[j]["User"])
-                        {
-                            this.User[k].steps.Add((int)records[j]["Steps"]);
-                        }
-                    }
-                    
-                }
+                getUsersStepsOfDay(ref records);
             }
-
         }
 
+        public void getUsersStepsOfDay(ref JArray records)
+        {
+            for (int j = 0; j < records.Count; j++)
+            {
+                for (int k = 0; k < this.User.Count; k++)
+                {
+                    if (this.User[k].Name == (string)records[j]["User"])
+                    {
+                        this.User[k].steps.Add((int)records[j]["Steps"]);
+                    }
+                }
+            }
+        }
         public void setAverageOfSteps()
         {
             for (int i = 0; i < this.User.Count; i++)
@@ -87,26 +105,27 @@ namespace TestTask.ViewModel
             }
         }
 
+        public void setMaxSteps()
+        {
+            for (int i = 0; i < this.User.Count; i++)
+            {
+                this.User[i].MaxSteps = this.User[i].steps.Max();
+            }
+        }
+
+        public void setMinSteps()
+        {
+            for (int i = 0; i < this.User.Count; i++)
+            {
+                this.User[i].MinSteps = this.User[i].steps.Min();
+            }
+        }
+
         public string[] getPaths()
         {
             string[] allfiles = Directory.GetFiles("TestData", "*.json", SearchOption.AllDirectories);
 
             return allfiles;
-        }
-
-        public void addUsersToTable()
-        {
-            //string url = File.ReadAllText("TestData/day1.json");
-            //JArray blogPosts = JArray.Parse(url);
-
-
-
-            for (int i = 0; i < this.User.Count; i++)
-            {
-
-                //this.User.Add(new User { Name = , AverageOfSteps = (Int32)blogPosts[i]["Steps"] });
-            }
-
         }
     }
 }

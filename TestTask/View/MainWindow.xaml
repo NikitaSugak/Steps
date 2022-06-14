@@ -6,27 +6,36 @@
         xmlns:local="clr-namespace:TestTask"
         xmlns:vm="clr-namespace:TestTask.ViewModel"
         mc:Ignorable="d"
-        Title="Steps" Height="600" Width="1000">
-    <Window.DataContext>
+        Title="Steps" Height="720" Width="1280">
+    <!--<Window.DataContext>
         <vm:Main/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0.8*" />
-        </Grid.ColumnDefinitions>
-        <ListView Name="userList" ItemsSource="{Binding User}" >
-            <ListView.View>
-                <GridView>
-                    <GridView.Columns>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
-                        <GridViewColumn Header="Average of steps" DisplayMemberBinding="{Binding Path=AverageOfSteps}"></GridViewColumn>
-                        <!--<GridViewColumn Header="Best result" DisplayMemberBinding="{Binding Path=UnitCost}"></GridViewColumn>
-                        <GridViewColumn Header="Worst re" DisplayMemberBinding="{Binding Path=UnitCost}"></GridViewColumn>-->
-                    </GridView.Columns>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
+       <StackPanel  Orientation="Horizontal">
+            <StackPanel.DataContext>
+                <vm:Main/>
+            </StackPanel.DataContext>
+            <ListView Name="userList" ItemsSource="{Binding User}"  SelectedItem="{Binding SelectedUser}" >
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                            <GridViewColumn Header="Average of steps" DisplayMemberBinding="{Binding Path=AverageOfSteps}"></GridViewColumn>
+                            <GridViewColumn Header="Best result" DisplayMemberBinding="{Binding Path=MaxSteps}"></GridViewColumn>
+                            <GridViewColumn Header="Worst result" DisplayMemberBinding="{Binding Path=MinSteps}"></GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <!--<DockPanel LastChildFill="True">-->
+            <!--<Button DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />-->
+            <StackPanel >
+                <StackPanel.DataContext>
+                    <vm:DrawGraph/>
+                </StackPanel.DataContext>
+                <Path  Fill="LightPink" Stroke="LightBlue" Data="{Binding Graph}"/>
+            </StackPanel>
+            <!--</DockPanel>-->
+        </StackPanel>
     </Grid>
 </Window>
