@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,14 +37,23 @@ namespace TestTask.ViewModel
 
         public Main()
         {
-            this.User = new ObservableCollection<User>();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "json files (*.json)|*.json";
 
-            getUsersName();
-            getUsersSteps();
-            setAverageOfSteps();
-            setMaxSteps();
-            setMinSteps();
-            setColors();
+            if ((bool)openFileDialog.ShowDialog())
+            {
+                string[] filenames = openFileDialog.FileNames;
+
+                this.User = new ObservableCollection<User>();
+
+                getUsersName(filenames[0]);
+                getUsersSteps(filenames);
+                setAverageOfSteps();
+                setMaxSteps();
+                setMinSteps();
+                setColors();
+            }
 
             if (SelectedUser != null)
             {
@@ -64,9 +74,9 @@ namespace TestTask.ViewModel
             }
         }
 
-        public void getUsersName()
+        public void getUsersName(string filename)
         {
-            JArray users = JArray.Parse(File.ReadAllText("TestData/day1.json"));
+            JArray users = JArray.Parse(File.ReadAllText(filename));
 
             for (int i = 0; i < users.Count; i++)
             {
@@ -74,9 +84,9 @@ namespace TestTask.ViewModel
             }
         }
 
-        public void getUsersSteps()
+        public void getUsersSteps(string[] filenames)
         {
-            string[] path = getPaths().OrderBy(p => int.Parse(p[12..^5])).ToArray();
+            string[] path = filenames.OrderBy(p => int.Parse(p[(filenames[0].LastIndexOf('\\') + 4)..^5])).ToArray();
 
             for (int i = 0; i < path.Count(); i++)
             {
@@ -142,9 +152,8 @@ namespace TestTask.ViewModel
 
         public static void saveFile()
         {
-                Save.saveInFile(selectedUser);
-            
-        }
+            Save.saveInFile(selectedUser);
 
+        }
     }
 }

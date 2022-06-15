@@ -17,14 +17,11 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Height="25" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Open File" ></MenuItem>
                 <MenuItem Header="Save File"  Click="menuSaveFile_Click" ></MenuItem>
                 <MenuItem Header="Save File as"  Click="menuSaveFileAs_Click" ></MenuItem>
                 <Separator />
-                <MenuItem Header="Exit" ></MenuItem>
+                <MenuItem Header="Exit" Click="menuExit_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Edit" ></MenuItem>
-            <MenuItem Header="View" ></MenuItem>
         </Menu>
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <StackPanel.DataContext>
@@ -70,6 +67,7 @@
                 <StackPanel.DataContext>
                     <vm:DrawGraph/>
                 </StackPanel.DataContext>
+                <Image Source="{Binding B}"/>
                 <TextBlock FontSize="18" TextAlignment="Center" Text="User Graph"/>
                 <Path StrokeThickness="3" Fill="Yellow"  Stroke="LightBlue" Data="{Binding Graph}"/>
                 <TextBlock Width="700" TextAlignment="Right" >30</TextBlock>

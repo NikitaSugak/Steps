@@ -47,9 +47,13 @@ namespace TestTask
             }
             else
             {
-                MessageBox.Show("User not selected.\n Please select User");
+                MessageBox.Show("User not selected.\nPlease select User");
             }
-            
+        }
+
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
