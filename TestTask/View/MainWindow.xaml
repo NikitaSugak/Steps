@@ -8,18 +8,60 @@
         mc:Ignorable="d"
         Title="Steps" Height="720" Width="1280">
     <Grid>
-        <StackPanel  Orientation="Horizontal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Height="25" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open File" ></MenuItem>
+                <MenuItem Header="Save File"  Click="menuSaveFile_Click" ></MenuItem>
+                <MenuItem Header="Save File as"  Click="menuSaveFileAs_Click" ></MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit" ></MenuItem>
+            <MenuItem Header="View" ></MenuItem>
+        </Menu>
+        <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <StackPanel.DataContext>
                 <vm:Main/>
             </StackPanel.DataContext>
-            <ListView Name="userList" ItemsSource="{Binding User}"  SelectedItem="{Binding SelectedUser}" >
+            <ListView Name="userList" ItemsSource="{Binding User}"  SelectedItem="{Binding SelectedUser}" Height="648" >
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
-                            <GridViewColumn Header="Average of steps" DisplayMemberBinding="{Binding Path=AverageOfSteps}"></GridViewColumn>
-                            <GridViewColumn Header="Best result"  DisplayMemberBinding="{Binding Path=MaxSteps}"></GridViewColumn>
-                            <GridViewColumn Header="Worst result" DisplayMemberBinding="{Binding Path=MinSteps}"></GridViewColumn>
+                            <GridViewColumn Header="Name" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="14" Width="300" Text="{Binding Path=Name}" Background="{Binding Path=Color}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Average of steps" Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="14" Width="50" Text="{Binding Path=AverageOfSteps}" Background="{Binding Path=Color}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Best result" Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="14" Width="50" Text="{Binding Path=MaxSteps}" Background="{Binding Path=Color}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Worst result" Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="14" Width="50" Text="{Binding Path=MinSteps}" Background="{Binding Path=Color}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -28,9 +70,11 @@
                 <StackPanel.DataContext>
                     <vm:DrawGraph/>
                 </StackPanel.DataContext>
-                <TextBlock FontSize="18" TextAlignment="Center" >User Graph</TextBlock>
-                <Path StrokeThickness="3" Fill="LightPink"  Stroke="LightBlue" Data="{Binding Graph}"/>
+                <TextBlock FontSize="18" TextAlignment="Center" Text="User Graph"/>
+                <Path StrokeThickness="3" Fill="Yellow"  Stroke="LightBlue" Data="{Binding Graph}"/>
                 <TextBlock Width="700" TextAlignment="Right" >30</TextBlock>
+
+
             </StackPanel>
         </StackPanel>
     </Grid>

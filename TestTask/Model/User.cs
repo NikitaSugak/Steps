@@ -13,6 +13,8 @@ namespace TestTask.Model
     {
         private string name;
         public List<int> steps = new List<int>();
+        public List<int> rank = new List<int>();
+        public List<string> status = new List<string>();
         private int averageOfSteps;
         private int minSteps;
         private int maxSteps;
@@ -77,15 +79,18 @@ namespace TestTask.Model
 
         public void setColor()
         {
-            //if (minSteps / averageOfSteps)
-            //{
-            //    Color = "DarkOrange";
-            //}
-
-            //if (maxSteps / averageOfSteps )
-            //{
-            //    Color = "DarkOrange";
-            //}
+            if (minSteps * 1.2 < averageOfSteps)
+            {
+                Color = "Red";
+            }
+            else if(maxSteps * 0.8  > averageOfSteps)
+            {
+                Color = "Red";
+            }
+            else
+            {
+                Color = "White";
+            }
 
         }
     }

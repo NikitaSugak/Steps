@@ -18,7 +18,7 @@ namespace TestTask.ViewModel
 {
     internal class Main : INotifyPropertyChanged
     {
-        private User? selectedUser;
+        public static User? selectedUser;
 
         public ObservableCollection<User> User { get; set; }
 
@@ -43,6 +43,7 @@ namespace TestTask.ViewModel
             setAverageOfSteps();
             setMaxSteps();
             setMinSteps();
+            setColors();
 
             if (SelectedUser != null)
             {
@@ -81,11 +82,11 @@ namespace TestTask.ViewModel
             {
                 JArray records = JArray.Parse(File.ReadAllText(path[i]));
 
-                getUsersStepsOfDay(ref records);
+                getUsersInfotmationOfDay(ref records);
             }
         }
 
-        public void getUsersStepsOfDay(ref JArray records)
+        public void getUsersInfotmationOfDay(ref JArray records)
         {
             for (int j = 0; j < records.Count; j++)
             {
@@ -94,6 +95,8 @@ namespace TestTask.ViewModel
                     if (this.User[k].Name == (string)records[j]["User"])
                     {
                         this.User[k].steps.Add((int)records[j]["Steps"]);
+                        this.User[k].status.Add((string)records[j]["Status"]);
+                        this.User[k].rank.Add((int)records[j]["Rank"]);
                     }
                 }
             }
@@ -135,6 +138,12 @@ namespace TestTask.ViewModel
             {
                 this.User[i].setColor();
             }
+        }
+
+        public static void saveFile()
+        {
+                Save.saveInFile(selectedUser);
+            
         }
 
     }

@@ -25,17 +25,31 @@ namespace TestTask
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
-        private void userList_SelectionChanged()
+        private void menuSaveFile_Click(object sender, RoutedEventArgs e)
         {
-
+            if (Main.selectedUser != null)
+            {
+                Main.saveFile();
+            }
+            else
+            {
+                MessageBox.Show("User not selected.\n Please select User");
+            }
         }
-
-        private void userList_SelectionChanged_1(object sender)
+        private void menuSaveFileAs_Click(object sender, RoutedEventArgs e)
         {
-
+            if (Main.selectedUser != null)
+            {
+                Save.path = Save.getFileName();
+                Main.saveFile();
+            }
+            else
+            {
+                MessageBox.Show("User not selected.\n Please select User");
+            }
+            
         }
     }
 }
