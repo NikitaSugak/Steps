@@ -21,6 +21,10 @@ namespace TestTask.ViewModel
         const int XDay = 700, YDay = 500;
 
         private static GeometryGroup graph;
+        private static string textDays;
+
+        static double countPixelInOneDay;
+        static double countStepsInOnePixel;
 
         public GeometryGroup Graph
         {
@@ -32,11 +36,22 @@ namespace TestTask.ViewModel
             }
         }
 
+        public string TextDays
+        {
+            get { return textDays; }
+            set
+            {
+                textDays = value;
+                OnPropertyChanged("TextDays");
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public DrawGraph()
         {
             graph = new GeometryGroup();
+            textDays = string.Empty;
         }
 
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -68,21 +83,22 @@ namespace TestTask.ViewModel
             graph.Children.Add(new LineGeometry(new Point(X0, Y0), new Point(XDay, YDay)));
         }
 
-        private static void setText()
+        private static void setText(int countDays)
         {
-            string testString = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor";
+            textDays = Convert.ToString(countDays);
 
-            // Create the initial formatted text string.
+        }
 
+        private static void drawBestResult(int bestResult, int day)
+        {
+            EllipseGeometry ellipse = new EllipseGeometry(new Point(X0 + countPixelInOneDay * day, -bestResult / countStepsInOnePixel + Y0), 6, 6);
+            graph.Children.Add(ellipse);
+        }
 
-            //System.Windows.Shapes.Shape shape = System.Windows.Shapes.;  
-
-            Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 8);
-            pen.StartCap = LineCap.ArrowAnchor;
-            pen.EndCap = LineCap.RoundAnchor;
-            Petzold.
-
-            //graph.Children.Add(testString);
+        private static void drawWorstResult(int worstResult, int day)
+        {
+            EllipseGeometry ellipse = new EllipseGeometry(new Point(X0 + countPixelInOneDay * day, -worstResult / countStepsInOnePixel + Y0), 6, 6);
+            graph.Children.Add(ellipse);
         }
 
         private static int getIndexSelectedUser(ref ObservableCollection<User> User, ref User SelectedUser)
@@ -106,14 +122,22 @@ namespace TestTask.ViewModel
 
             int indexSelectedUser = getIndexSelectedUser(ref User, ref SelectedUser);
 
-            double countPixelInOneDay = getCountPixelInOneDay(XDay - X0, User[indexSelectedUser].steps.Count - 1);
-            double countStepsInOnePixel = getCountStepsInOnePixel(Y0 - YSteps, User[indexSelectedUser].steps.Max());
+            countPixelInOneDay = getCountPixelInOneDay(XDay - X0, User[indexSelectedUser].steps.Count - 1);
+            countStepsInOnePixel = getCountStepsInOnePixel(Y0 - YSteps, User[indexSelectedUser].steps.Max());
                         
             for (int i = 0; i < User[indexSelectedUser].steps.Count - 1; i++)
             {
                 graph.Children.Add(new LineGeometry(new Point(X0 + i * countPixelInOneDay, - User[indexSelectedUser].steps[i] / countStepsInOnePixel + Y0), 
                                                     new Point(X0 + (i + 1) * countPixelInOneDay, - User[indexSelectedUser].steps[i + 1] / countStepsInOnePixel + Y0)));
             }
+
+            int bestSteps = User[indexSelectedUser].steps.Max();
+            int dayOfBestSteps = User[indexSelectedUser].steps.IndexOf(bestSteps);
+            drawBestResult(bestSteps, dayOfBestSteps);
+
+            int worstSteps = User[indexSelectedUser].steps.Min();
+            int dayOfWorstSteps = User[indexSelectedUser].steps.IndexOf(worstSteps);
+            drawWorstResult(worstSteps, dayOfWorstSteps);
         }
     }
 }

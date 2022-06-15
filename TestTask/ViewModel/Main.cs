@@ -21,6 +21,7 @@ namespace TestTask.ViewModel
         private User? selectedUser;
 
         public ObservableCollection<User> User { get; set; }
+
         public User SelectedUser
         {
             get { return selectedUser; }
@@ -127,5 +128,14 @@ namespace TestTask.ViewModel
 
             return allfiles;
         }
+
+        public void setColors()
+        {
+            for (int i = 0; i < this.User.Count; i++)
+            {
+                this.User[i].setColor();
+            }
+        }
+
     }
 }

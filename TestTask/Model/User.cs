@@ -16,6 +16,7 @@ namespace TestTask.Model
         private int averageOfSteps;
         private int minSteps;
         private int maxSteps;
+        private string color;
 
         public string Name
         {
@@ -56,12 +57,36 @@ namespace TestTask.Model
             }
         }
 
+        public string Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                OnPropertyChanged("color");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public void setColor()
+        {
+            //if (minSteps / averageOfSteps)
+            //{
+            //    Color = "DarkOrange";
+            //}
+
+            //if (maxSteps / averageOfSteps )
+            //{
+            //    Color = "DarkOrange";
+            //}
+
         }
     }
 }

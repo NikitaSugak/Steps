@@ -7,11 +7,8 @@
         xmlns:vm="clr-namespace:TestTask.ViewModel"
         mc:Ignorable="d"
         Title="Steps" Height="720" Width="1280">
-    <!--<Window.DataContext>
-        <vm:Main/>
-    </Window.DataContext>-->
     <Grid>
-       <StackPanel  Orientation="Horizontal">
+        <StackPanel  Orientation="Horizontal">
             <StackPanel.DataContext>
                 <vm:Main/>
             </StackPanel.DataContext>
@@ -21,21 +18,20 @@
                         <GridView.Columns>
                             <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
                             <GridViewColumn Header="Average of steps" DisplayMemberBinding="{Binding Path=AverageOfSteps}"></GridViewColumn>
-                            <GridViewColumn Header="Best result" DisplayMemberBinding="{Binding Path=MaxSteps}"></GridViewColumn>
+                            <GridViewColumn Header="Best result"  DisplayMemberBinding="{Binding Path=MaxSteps}"></GridViewColumn>
                             <GridViewColumn Header="Worst result" DisplayMemberBinding="{Binding Path=MinSteps}"></GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <!--<DockPanel LastChildFill="True">-->
-            <!--<Button DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />-->
             <StackPanel >
                 <StackPanel.DataContext>
                     <vm:DrawGraph/>
                 </StackPanel.DataContext>
-                <Path  Fill="LightPink" Stroke="LightBlue" Data="{Binding Graph}"/>
+                <TextBlock FontSize="18" TextAlignment="Center" >User Graph</TextBlock>
+                <Path StrokeThickness="3" Fill="LightPink"  Stroke="LightBlue" Data="{Binding Graph}"/>
+                <TextBlock Width="700" TextAlignment="Right" >30</TextBlock>
             </StackPanel>
-            <!--</DockPanel>-->
         </StackPanel>
     </Grid>
 </Window>
