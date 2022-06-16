@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using TestTask.Model;
-using Point = System.Windows.Point;
 
 namespace TestTask.ViewModel
 {
@@ -28,8 +20,6 @@ namespace TestTask.ViewModel
         static double countPixelInOneDay;
         static double countStepsInOnePixel;
 
-        private static Bitmap b;
-
         public GeometryGroup Graph
         {
             get { return graph; }
@@ -37,16 +27,6 @@ namespace TestTask.ViewModel
             {
                 graph = value;
                 OnPropertyChanged("Graph");
-            }
-        }
-
-        public Bitmap B
-        {
-            get { return b; }
-            set
-            {
-                b = value;
-                OnPropertyChanged("B");
             }
         }
 
@@ -65,7 +45,7 @@ namespace TestTask.ViewModel
         public DrawGraph()
         {
             graph = new GeometryGroup();
-            textDays = string.Empty;
+            TextDays = "Day " + Main.user[0].steps.Count.ToString();
         }
 
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -95,12 +75,6 @@ namespace TestTask.ViewModel
         {
             graph.Children.Add(new LineGeometry(new Point(X0, Y0), new Point(XSteps, YSteps)));
             graph.Children.Add(new LineGeometry(new Point(X0, Y0), new Point(XDay, YDay)));
-        }
-
-        private static void setText(int countDays)
-        {
-            textDays = Convert.ToString(countDays);
-
         }
 
         private static void drawBestResult(int bestResult, int day)
@@ -152,21 +126,6 @@ namespace TestTask.ViewModel
             int worstSteps = User[indexSelectedUser].steps.Min();
             int dayOfWorstSteps = User[indexSelectedUser].steps.IndexOf(worstSteps);
             drawWorstResult(worstSteps, dayOfWorstSteps);
-        }
-
-
-
-        public void bit()
-        {
-            Bitmap b = new Bitmap(700, 500);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                //g.Clear(Color.White);
-                g.DrawRectangle(new System.Drawing.Pen(System.Drawing.Color.Black), 100, 100, 100, 100);
-                // что нибудь рисуете
-                // g.DrawRectangle(...
-            }
-
         }
     }
 }

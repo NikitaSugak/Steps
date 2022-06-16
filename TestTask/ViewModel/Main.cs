@@ -1,18 +1,10 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using TestTask.Model;
 
 namespace TestTask.ViewModel
@@ -21,7 +13,17 @@ namespace TestTask.ViewModel
     {
         public static User? selectedUser;
 
-        public ObservableCollection<User> User { get; set; }
+        public static ObservableCollection<User> user;
+
+        public ObservableCollection<User> User
+        {
+            get { return user; }
+            set
+            {
+                user = value;
+                OnPropertyChanged("User");
+            }
+        }
 
         public User SelectedUser
         {
@@ -45,7 +47,7 @@ namespace TestTask.ViewModel
             {
                 string[] filenames = openFileDialog.FileNames;
 
-                this.User = new ObservableCollection<User>();
+                User = new ObservableCollection<User>();
 
                 getUsersName(filenames[0]);
                 getUsersSteps(filenames);
@@ -100,60 +102,53 @@ namespace TestTask.ViewModel
         {
             for (int j = 0; j < records.Count; j++)
             {
-                for (int k = 0; k < this.User.Count; k++)
+                for (int k = 0; k < User.Count; k++)
                 {
-                    if (this.User[k].Name == (string)records[j]["User"])
+                    if (User[k].Name == (string)records[j]["User"])
                     {
-                        this.User[k].steps.Add((int)records[j]["Steps"]);
-                        this.User[k].status.Add((string)records[j]["Status"]);
-                        this.User[k].rank.Add((int)records[j]["Rank"]);
+                        User[k].steps.Add((int)records[j]["Steps"]);
+                        User[k].status.Add((string)records[j]["Status"]);
+                        User[k].rank.Add((int)records[j]["Rank"]);
                     }
                 }
             }
         }
+
         public void setAverageOfSteps()
         {
-            for (int i = 0; i < this.User.Count; i++)
+            for (int i = 0; i < User.Count; i++)
             {
-                this.User[i].AverageOfSteps = (int)this.User[i].steps.Average();
+                User[i].AverageOfSteps = (int)User[i].steps.Average();
             }
         }
 
         public void setMaxSteps()
         {
-            for (int i = 0; i < this.User.Count; i++)
+            for (int i = 0; i < User.Count; i++)
             {
-                this.User[i].MaxSteps = this.User[i].steps.Max();
+                User[i].MaxSteps = User[i].steps.Max();
             }
         }
 
         public void setMinSteps()
         {
-            for (int i = 0; i < this.User.Count; i++)
+            for (int i = 0; i < User.Count; i++)
             {
-                this.User[i].MinSteps = this.User[i].steps.Min();
+                 User[i].MinSteps = User[i].steps.Min();
             }
-        }
-
-        public string[] getPaths()
-        {
-            string[] allfiles = Directory.GetFiles("TestData", "*.json", SearchOption.AllDirectories);
-
-            return allfiles;
         }
 
         public void setColors()
         {
             for (int i = 0; i < this.User.Count; i++)
             {
-                this.User[i].setColor();
+                User[i].setColor();
             }
         }
 
         public static void saveFile()
         {
             Save.saveInFile(selectedUser);
-
         }
     }
 }

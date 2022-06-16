@@ -67,12 +67,9 @@
                 <StackPanel.DataContext>
                     <vm:DrawGraph/>
                 </StackPanel.DataContext>
-                <Image Source="{Binding B}"/>
-                <TextBlock FontSize="18" TextAlignment="Center" Text="User Graph"/>
+                <TextBlock FontSize="14" TextAlignment="Center" Text="User Graph"/>
                 <Path StrokeThickness="3" Fill="Yellow"  Stroke="LightBlue" Data="{Binding Graph}"/>
-                <TextBlock Width="700" TextAlignment="Right" >30</TextBlock>
-
-
+                <TextBlock Text="{Binding Path=TextDays}" TextAlignment="Right" ></TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

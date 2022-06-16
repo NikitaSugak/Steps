@@ -1,11 +1,8 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using TestTask.Model;
 
 namespace TestTask.ViewModel
@@ -21,10 +18,17 @@ namespace TestTask.ViewModel
             {
                 path = getFileName();
             }
-            
-            using (StreamWriter writer = new StreamWriter(path, false))
+            if (path == String.Empty || path == null)
             {
-                await writer.WriteLineAsync(json);
+
+                MessageBox.Show("User don't save.");
+            }
+            else
+            {
+                using (StreamWriter writer = new StreamWriter(path, false))
+                {
+                    await writer.WriteLineAsync(json);
+                }
             }
         }
 
@@ -74,7 +78,7 @@ namespace TestTask.ViewModel
 
             if ((bool)saveFileDialog1.ShowDialog())
             {
-                return saveFileDialog1.FileName;    
+                return saveFileDialog1.FileName;
             }
 
             return String.Empty;
